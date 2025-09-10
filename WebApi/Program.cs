@@ -16,8 +16,13 @@ builder.Services.AddGrpcClient<Greeter.GreeterClient>(o =>
     o.Address = new Uri("http://grpcserver");
 });
 
+builder.Services.AddCors();
 var app = builder.Build();
 
+app.UseCors(policy => policy
+    .AllowAnyOrigin()
+    .AllowAnyMethod()
+    .AllowAnyHeader());
 app.MapDefaultEndpoints();
 app.UseHttpsRedirection();
 

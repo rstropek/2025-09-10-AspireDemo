@@ -1,0 +1,40 @@
+.dashboard-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: Arial, sans-serif;
+}
+
+.dashboard-container h1 {
+  color: #333;
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2.5rem;
+}
+
+.card {
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card h2 {
+  color: #555;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.response {
+  background: #e8f4fd;
+  border: 1px solid #b3d9ff;
+  border-radius: 4px;
+  padding: 1rem;
+  font-size: 1.1rem;
+  color: #2c3e50;
+  font-weight: bold;
+  margin: 0;
+}
