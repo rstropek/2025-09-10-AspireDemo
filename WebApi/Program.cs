@@ -45,5 +45,6 @@ app.MapGet("/callGreeter", async (Greeter.GreeterClient client) =>
 
 app.UseMqttMessaging();
 app.UseUserManagement();
+app.UseRustyEndpoints();
 
 app.Run();

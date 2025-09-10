@@ -17,6 +17,9 @@ var mongo = builder.AddMongoDB("mongodb")
     .WithMongoExpress();
 var mongoDb = mongo.AddDatabase("mongodbdatabase");
 
+var rust = builder.AddRustApp("rusty", workingDirectory: Path.Combine("..", "rusty"))
+    .WithHttpEndpoint(env: "PORT");
+
 var grpcServer = builder.AddProject<Projects.GrpcServer>("grpcserver");
 
 var webapi = builder.AddProject<Projects.WebApi>("webapi")
@@ -29,6 +32,7 @@ var webapi = builder.AddProject<Projects.WebApi>("webapi")
         ctx.EnvironmentVariables["MQTT__PORT"] = ep.Port.ToString();
     })
     .WithReference(mongoDb).WaitFor(mongoDb)
+    .WithReference(rust)
     .WithReplicas(2);
 
 var frontend = builder.AddNpmApp("frontend", Path.Combine("..", "Frontend"))
