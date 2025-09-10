@@ -11,6 +11,7 @@ import { RouterLink, RouterOutlet } from '@angular/router';
         <ul>
           <li><a routerLink="/dashboard" routerLinkActive="active">Dashboard</a></li>
           <li><a routerLink="/mqtt" routerLinkActive="active">MQTT Testing</a></li>
+          <li><a routerLink="/users" routerLinkActive="active">User Management</a></li>
         </ul>
       </nav>
 

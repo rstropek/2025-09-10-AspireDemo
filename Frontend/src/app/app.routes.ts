@@ -14,4 +14,8 @@ export const routes: Routes = [
     path: 'mqtt',
     loadComponent: () => import('./mqtt/mqtt').then((m) => m.Mqtt),
   },
+  {
+    path: 'users',
+    loadComponent: () => import('./users/users').then((m) => m.Users),
+  },
 ];

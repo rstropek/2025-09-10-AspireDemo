@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Diagnostics;
 using GrpcDemo;
 using MQTTnet;
@@ -14,6 +15,8 @@ builder.Services.AddGrpcClient<Greeter.GreeterClient>(o =>
 });
 
 builder.Services.AddSingleton<MqttClientFactory>();
+
+builder.AddMongoDBClient(connectionName: "mongodbdatabase");
 
 builder.Services.AddCors();
 var app = builder.Build();
@@ -41,5 +44,6 @@ app.MapGet("/callGreeter", async (Greeter.GreeterClient client) =>
 });
 
 app.UseMqttMessaging();
+app.UseUserManagement();
 
 app.Run();

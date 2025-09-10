@@ -1,0 +1,74 @@
+<div class="users-container">
+  <h1>User Management</h1>
+
+  <!-- Status Section -->
+  <div class="status-section">
+    <p class="status" [class.success]="status().includes('successfully')" [class.error]="status().includes('Error')">
+      {{ status() }}
+    </p>
+  </div>
+
+  <!-- User Form Section -->
+  <div class="card form-card">
+    <h2>{{ isEditing() ? 'Edit User' : 'Create New User' }}</h2>
+    <div class="form-group">
+      <label for="userName">Name:</label>
+      <input 
+        id="userName"
+        type="text" 
+        [value]="userName()"
+        (input)="userName.set($any($event.target).value)"
+        placeholder="Enter user name"
+        class="form-input">
+    </div>
+    
+    <div class="form-group">
+      <label for="userEmail">Email:</label>
+      <input 
+        id="userEmail"
+        type="email" 
+        [value]="userEmail()"
+        (input)="userEmail.set($any($event.target).value)"
+        placeholder="Enter user email"
+        class="form-input">
+    </div>
+
+    <div class="form-actions">
+      @if (isEditing()) {
+        <button (click)="updateUser()" class="btn btn-primary">Update User</button>
+        <button (click)="clearForm()" class="btn btn-secondary">Cancel</button>
+      } @else {
+        <button (click)="createUser()" class="btn btn-primary">Create User</button>
+      }
+      <button (click)="loadUsers()" class="btn btn-secondary">Refresh</button>
+    </div>
+  </div>
+
+  <!-- Users List Section -->
+  <div class="card">
+    <h2>Users List</h2>
+    @if (users().length === 0) {
+      <p class="no-users">No users found. Create your first user above!</p>
+    } @else {
+      <div class="users-table">
+        <div class="table-header">
+          <div class="table-cell">Name</div>
+          <div class="table-cell">Email</div>
+          <div class="table-cell">Created At</div>
+          <div class="table-cell">Actions</div>
+        </div>
+        @for (user of users(); track user.id) {
+          <div class="table-row" [class.selected]="selectedUser()?.id === user.id">
+            <div class="table-cell">{{ user.name }}</div>
+            <div class="table-cell">{{ user.email }}</div>
+            <div class="table-cell">{{ formatDate(user.createdAt) }}</div>
+            <div class="table-cell actions">
+              <button (click)="editUser(user)" class="btn btn-small btn-edit">Edit</button>
+              <button (click)="deleteUser(user)" class="btn btn-small btn-danger">Delete</button>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>

@@ -12,6 +12,11 @@ var mosquitto = builder.AddContainer("mosquitto", image: "eclipse-mosquitto:late
         e.UriScheme = "tcp";
     });
 
+var mongo = builder.AddMongoDB("mongodb")
+    .WithDataVolume("mongodata2", isReadOnly: false)
+    .WithMongoExpress();
+var mongoDb = mongo.AddDatabase("mongodbdatabase");
+
 var grpcServer = builder.AddProject<Projects.GrpcServer>("grpcserver");
 
 var webapi = builder.AddProject<Projects.WebApi>("webapi")
@@ -23,6 +28,7 @@ var webapi = builder.AddProject<Projects.WebApi>("webapi")
         ctx.EnvironmentVariables["MQTT__HOST"] = ep.Host;
         ctx.EnvironmentVariables["MQTT__PORT"] = ep.Port.ToString();
     })
+    .WithReference(mongoDb).WaitFor(mongoDb)
     .WithReplicas(2);
 
 var frontend = builder.AddNpmApp("frontend", Path.Combine("..", "Frontend"))
