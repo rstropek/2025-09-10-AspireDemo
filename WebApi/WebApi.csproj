@@ -14,6 +14,7 @@
   <ItemGroup>
     <ProjectReference Include="..\AspireDemoGrpc.ServiceDefaults\AspireDemoGrpc.ServiceDefaults.csproj" />
     <ProjectReference Include="..\GrpcShared\GrpcShared.csproj" />
+    <PackageReference Include="MQTTnet" Version="5.0.1.1416" />
   </ItemGroup>
 
 </Project>

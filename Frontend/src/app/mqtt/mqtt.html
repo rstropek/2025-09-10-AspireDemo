@@ -1,0 +1,60 @@
+<div class="mqtt-container">
+  <h1>MQTT Testing</h1>
+
+  <!-- Send Message Section -->
+  <div class="card">
+    <h2>Send Message</h2>
+    <div class="input-group">
+      <input 
+        type="text" 
+        [value]="messageToSend()"
+        (input)="messageToSend.set($any($event.target).value)"
+        placeholder="Enter message to send"
+        class="message-input">
+      <button (click)="sendMessage()" class="send-button">Send Message</button>
+    </div>
+    <p class="status" [class.success]="sendStatus().includes('sent')" [class.error]="sendStatus().includes('Error')">
+      {{ sendStatus() }}
+    </p>
+  </div>
+
+  <!-- Stream Messages Section -->
+  <div class="card">
+    <h2>Message Stream</h2>
+    <div class="stream-controls">
+      <button 
+        (click)="startStreaming()" 
+        [disabled]="isStreaming()"
+        class="stream-button start">
+        {{ isStreaming() ? 'Streaming...' : 'Start Streaming' }}
+      </button>
+      <button 
+        (click)="stopStreaming()" 
+        [disabled]="!isStreaming()"
+        class="stream-button stop">
+        Stop Streaming
+      </button>
+      <button 
+        (click)="clearMessages()" 
+        class="stream-button clear">
+        Clear Messages
+      </button>
+    </div>
+    
+    <div class="messages-container">
+      <div class="connection-status" [class.connected]="isStreaming()">
+        {{ isStreaming() ? '🟢 Connected' : '🔴 Disconnected' }}
+      </div>
+      
+      @if (receivedMessages().length === 0) {
+        <p class="no-messages">No messages received yet. Start streaming and send some messages!</p>
+      } @else {
+        <div class="messages-list">
+          @for (message of receivedMessages(); track $index) {
+            <div class="message-item">{{ message }}</div>
+          }
+        </div>
+      }
+    </div>
+  </div>
+</div>

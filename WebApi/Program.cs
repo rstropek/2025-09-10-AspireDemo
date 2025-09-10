@@ -1,12 +1,9 @@
 using System.Diagnostics;
 using GrpcDemo;
+using MQTTnet;
+using WebApi;
 
 AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
-
-foreach (System.Collections.DictionaryEntry envVar in Environment.GetEnvironmentVariables())
-{
-    Console.WriteLine($"{envVar.Key}={envVar.Value}");
-}
 
 var builder = WebApplication.CreateBuilder(args);
 builder.AddServiceDefaults();
@@ -15,6 +12,8 @@ builder.Services.AddGrpcClient<Greeter.GreeterClient>(o =>
 {
     o.Address = new Uri("http://grpcserver");
 });
+
+builder.Services.AddSingleton<MqttClientFactory>();
 
 builder.Services.AddCors();
 var app = builder.Build();
@@ -40,5 +39,7 @@ app.MapGet("/callGreeter", async (Greeter.GreeterClient client) =>
 
     return Results.Ok(new { reply.Message });
 });
+
+app.UseMqttMessaging();
 
 app.Run();
